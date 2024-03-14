@@ -20,8 +20,11 @@ class ACO:
         self.tours = tours
         self.Q = Q
         self.colors = []
+        self.file = ""
+        
         
     def getData(self,file):
+        self.file = file
         self.graph = dict({})
         f = open(file, "r")
         l = 0
@@ -105,29 +108,12 @@ class ACO:
                 maxCol = colors
             if colors < maxCol:
                 minCol = colors
-            # print(colors, coloring)
         self.Q = 1
         for i in range(1, maxCol+1):
-        # for i in range(1,len(list(self.graph.keys()))+1):
             for v in self.graph.keys():
                 self.trail[(v,i)] = 1
-                # self.trail[(v,i)] = 1
-                
-                # deltat = 0
-                # for a in self.ants:
-                #     if self.ants[a][v] == i:
-                #         deltat += self.Q/self.getColors(self.ants[a])
-
-                # self.trail[(v,i)] = self.gamma * self.trail[(v,i)] + deltat
-                
-                # if deltat != 0:
-                #     print(deltat)
-                # self.trail[(v,i)] = 0.000002 * self.trail[(v,i)] + deltat
         
         for i in range(1,maxCol+1):
-        # for i in range(1,minCol+1):
-        # for i in range(1,len(list(self.graph.keys()))+1):
-        # for i in range(1,minCol+2):
             self.colors.append(i)
             
     def randomColorUpperbound(self, upperbound):
@@ -191,29 +177,13 @@ class ACO:
                 maxCol = colors
             if colors < maxCol:
                 minCol = colors
-            # print(colors, coloring)
+
         self.Q = 1
         for i in range(1, maxCol+1):
-        # for i in range(1,len(list(self.graph.keys()))+1):
             for v in self.graph.keys():
                 self.trail[(v,i)] = 1
-                # self.trail[(v,i)] = 1
-                
-                # deltat = 0
-                # for a in self.ants:
-                #     if self.ants[a][v] == i:
-                #         deltat += self.Q/self.getColors(self.ants[a])
-
-                # self.trail[(v,i)] = self.gamma * self.trail[(v,i)] + deltat
-                
-                # if deltat != 0:
-                #     print(deltat)
-                # self.trail[(v,i)] = 0.000002 * self.trail[(v,i)] + deltat
         
         for i in range(1,maxCol+1):
-        # for i in range(1,minCol+1):
-        # for i in range(1,len(list(self.graph.keys()))+1):
-        # for i in range(1,minCol+2):
             self.colors.append(i)
             
     def getNeighborColors(self,assignment, v):
@@ -286,7 +256,6 @@ class ACO:
                     sigmaT = 0
                     for j in self.colors:
                         if j not in neighborColors and j in self.ants[a]:
-                        # if j not in neighborColors:
                             assignment = self.ants[a].copy()
                             assignment[v] = j
                             n = x/self.getColors(assignment)
@@ -296,7 +265,6 @@ class ACO:
                         for i in self.colors:
                             p = 0
                             if i not in neighborColors and i in self.ants[a]:
-                            # if i not in neighborColors:
                                 assignment = self.ants[a].copy()
                                 assignment[v] = i
                                 n = x/self.getColors(assignment)
@@ -307,8 +275,7 @@ class ACO:
                         self.ants[a][v] = c[0]
                     else:
                         continue
-                    # if a == 1 and v == 0:
-                    #     prob = probabilities
+
             Assignment = []
             grundy = math.inf
             for a in self.ants:
@@ -318,12 +285,7 @@ class ACO:
                     Assignment = self.ants[a]      
             print("Best number of colors use:", grundy)
             print("Average fitness:", self.getAvg())
-            # print(prob)
-            # if k == 10:
-            #     for t in self.trail:
-            #         print(t,":",self.trail[t])
-            # print("Assignment:",Assignment)
-        
+
         return grundy, Assignment
     
     def optimizeHeuristic(self):
@@ -351,7 +313,6 @@ class ACO:
             
             # compute probabilities and transition
             x = 1
-            # prob = []
             for a in self.ants:
                 random.shuffle(vertices)
                 
@@ -362,7 +323,6 @@ class ACO:
                     sigmaT = 0
                     for j in self.colors:
                         if j not in neighborColors and j in self.ants[a]:
-                        # if j not in neighborColors:
                             assignment = self.ants[a].copy()
                             assignment[v] = j
                             n = x/self.getColors(assignment)
@@ -372,7 +332,6 @@ class ACO:
                         for i in self.colors:
                             p = 0
                             if i not in neighborColors and i in self.ants[a]:
-                            # if i not in neighborColors:
                                 assignment = self.ants[a].copy()
                                 assignment[v] = i
                                 n = x/self.getColors(assignment)
@@ -383,21 +342,10 @@ class ACO:
                         og = self.ants[a]
                         self.ants[a][v] = c[0]
                         if self.getColors(og) < self.getColors(self.ants[a]):
-                            # if self.getColors(og) == 17:
-                            #     print("min")
-                            #     for y in self.graph:
-                            #         for h in self.colors:
-                            #             a = og.copy()
-                            #             if h not in self.getNeighborColors(a,y):
-                            #                 a[y] = h
-                            #                 if  self.getColors(a) < 17:
-                            #                     print(a)
-                            #                     print("omg")
                             for u in self.graph[v]:
                                 sigmaT = 0
                                 for j in self.colors:
                                     if j not in neighborColors and j in self.ants[a]:
-                                    # if j not in neighborColors:
                                         assignment = self.ants[a].copy()
                                         assignment[u] = j
                                         n = x/self.getColors(assignment)
@@ -407,7 +355,6 @@ class ACO:
                                     for i in self.colors:
                                         p = 0
                                         if i not in neighborColors and i in self.ants[a]:
-                                        # if i not in neighborColors:
                                             assignment = self.ants[a].copy()
                                             assignment[u] = i
                                             n = x/self.getColors(assignment)
@@ -418,8 +365,7 @@ class ACO:
                                     self.ants[a][u] = c[0]
                     else:
                         continue
-                    # if a == 1 and v == 0:
-                    #     prob = probabilities
+
             Assignment = []
             grundy = math.inf
             for a in self.ants:
@@ -429,78 +375,439 @@ class ACO:
                     Assignment = self.ants[a]      
             print("Best number of colors use:", grundy)
             print("Average fitness:", self.getAvg())
-            # print(prob)
-            # if k == 10:
-            #     for t in self.trail:
-            #         print(t,":",self.trail[t])
-            # print("Assignment:",Assignment)
         
         return grundy, Assignment
             
 
-    def test(self,k):
+    def test(self):
         
-        fitprop_x = []
-        y = []
-        for i in range(self.generation):
-            y.append(i+1)
-            fitprop_x.append(fitprop[i][k])
+        #classic
+        self.initialize()
+        self.alpha = 1
+        self.beta = 2
+        self.gamma = 0.5
+        
+        avgs = []
+        tours = []
+        bests = []
+        
+        vertices = list(self.graph.keys())
+        
+        grundy = math.inf
+        for a in self.ants:
+            col = self.getColors(self.ants[a])  
+            if col <= grundy:
+                grundy = col
+                Assignment = self.ants[a]     
+        bests.append(grundy) 
+        avgs.append(self.getAvg())
+        tours.append(0)
+        for k in range(self.tours):
+            tours.append(k+1)
+            print("tour:", k)
+            # update trail intensities
+            for t in self.trail:
+                deltat = 0
+                for a in self.ants:
+                    if self.ants[a][t[0]] == t[1]:
+                        deltat += self.Q/self.getColors(self.ants[a])
+                
+                self.trail[t] = self.gamma * self.trail[t] + deltat
             
             
-        
-        print("Fitness propotional best fitness table")
-        for i in range(len(random)):
-            print(fitprop[i])
-            
-        print("Fitness propotional average fitness table")
-        for i in range(len(random)):
-            print(fitprop_average[i])
-            
-               
-        
-        # print(truncation_x)
-        ypoints_1 = np.array(fitprop_x)
-        ypoints_2 = np.array(ranked_x)
-        ypoints_3 = np.array(tournament_x)
-        ypoints_4 = np.array(truncation_x)
-        ypoints_5 = np.array(random_x)
-        xpoints = np.array(y)
-        
-        # plt.plot(X, y, color='r', label='sin') 
-        # plt.plot(X, z, color='g', label='cos')
+            # compute probabilities and transition
+            x = 1
+            prob = []
+            for a in self.ants:
+                random.shuffle(vertices)
+                
+                for v in vertices:
+                    neighborColors = self.getNeighborColors(self.ants[a],v)
+                    
+                    #compute probabilities
+                    sigmaT = 0
+                    for j in self.colors:
+                        if j not in neighborColors and j in self.ants[a]:
+                            assignment = self.ants[a].copy()
+                            assignment[v] = j
+                            n = x/self.getColors(assignment)
+                            sigmaT += (self.trail[(v,j)])**self.alpha * n**self.beta
+                    if sigmaT != 0: #if can change
+                        probabilities = []
+                        for i in self.colors:
+                            p = 0
+                            if i not in neighborColors and i in self.ants[a]:
+                                assignment = self.ants[a].copy()
+                                assignment[v] = i
+                                n = x/self.getColors(assignment)
+                                p = ((self.trail[(v,i)])**self.alpha * n**self.beta)/sigmaT
+                            probabilities.append(p)
+                        # transition
+                        c = choice(self.colors, 1, p=probabilities)
+                        self.ants[a][v] = c[0]
+                    else:
+                        continue
 
-        plt.plot(xpoints, ypoints_1, color='r', label='fitness proportional')
-        plt.plot(xpoints, ypoints_2, color='b', label='ranked')
-        plt.plot(xpoints, ypoints_3, color='g', label='tournament')
-        plt.plot(xpoints, ypoints_4, color='y', label='truncation')
-        plt.plot(xpoints, ypoints_5, color='k', label='random')
+            Assignment = []
+            grundy = math.inf
+            for a in self.ants:
+                col = self.getColors(self.ants[a])  
+                if col <= grundy:
+                    grundy = col
+                    Assignment = self.ants[a]      
+            bests.append(grundy) 
+            avgs.append(self.getAvg())
+
+        ypoints_1 = np.array(avgs)
+        ypoints_2 = np.array(bests)
+        xpoints = np.array(tours)
+        
+
+        plt.plot(xpoints, ypoints_1, color='r', label='Average colors used')
+        plt.plot(xpoints, ypoints_2, color='b', label='Best colors used')
+        plt.title(self.file, "Heuristic with greedy initialization, alpha = 1, beta = 2, gamma = 0.5")
+        plt.show()
+                
+                
+        self.initialize_random()
+        self.alpha = 1.5
+        self.beta = 3
+        self.gamma = 0.8
+        
+        avgs = []
+        tours = []
+        bests = []
+        
+        vertices = list(self.graph.keys())
+        
+        grundy = math.inf
+        for a in self.ants:
+            col = self.getColors(self.ants[a])  
+            if col <= grundy:
+                grundy = col
+                Assignment = self.ants[a]     
+        bests.append(grundy) 
+        avgs.append(self.getAvg())
+        tours.append(0)
+        for k in range(self.tours):
+            tours.append(k+1)
+            print("tour:", k)
+            # update trail intensities
+            for t in self.trail:
+                deltat = 0
+                for a in self.ants:
+                    if self.ants[a][t[0]] == t[1]:
+                        deltat += self.Q/self.getColors(self.ants[a])
+                
+                self.trail[t] = self.gamma * self.trail[t] + deltat
+            
+            
+            # compute probabilities and transition
+            x = 1
+            prob = []
+            for a in self.ants:
+                random.shuffle(vertices)
+                
+                for v in vertices:
+                    neighborColors = self.getNeighborColors(self.ants[a],v)
+                    
+                    #compute probabilities
+                    sigmaT = 0
+                    for j in self.colors:
+                        if j not in neighborColors and j in self.ants[a]:
+                            assignment = self.ants[a].copy()
+                            assignment[v] = j
+                            n = x/self.getColors(assignment)
+                            sigmaT += (self.trail[(v,j)])**self.alpha * n**self.beta
+                    if sigmaT != 0: #if can change
+                        probabilities = []
+                        for i in self.colors:
+                            p = 0
+                            if i not in neighborColors and i in self.ants[a]:
+                                assignment = self.ants[a].copy()
+                                assignment[v] = i
+                                n = x/self.getColors(assignment)
+                                p = ((self.trail[(v,i)])**self.alpha * n**self.beta)/sigmaT
+                            probabilities.append(p)
+                        # transition
+                        c = choice(self.colors, 1, p=probabilities)
+                        self.ants[a][v] = c[0]
+                    else:
+                        continue
+
+            Assignment = []
+            grundy = math.inf
+            for a in self.ants:
+                col = self.getColors(self.ants[a])  
+                if col <= grundy:
+                    grundy = col
+                    Assignment = self.ants[a]      
+            bests.append(grundy) 
+            avgs.append(self.getAvg())
+
+        # print(truncation_x)
+        ypoints_1 = np.array(avgs)
+        ypoints_2 = np.array(bests)
+        xpoints = np.array(tours)
+        
+
+        plt.plot(xpoints, ypoints_1, color='r', label='Average colors used')
+        plt.plot(xpoints, ypoints_2, color='b', label='Best colors used')
+        plt.title(self.file, "Heuristic with random initialization, alpha = 1.5, beta = 3, gamma = 0.8")
+        plt.show()
+        
+        
+        
+        
+        # heurestic 
+        
+        self.initialize()
+        self.alpha = 1
+        self.beta = 2
+        self.gamma = 0.5
+        
+        avgs = []
+        tours = []
+        bests = []
+        
+        vertices = list(self.graph.keys())
+        
+        grundy = math.inf
+        for a in self.ants:
+            col = self.getColors(self.ants[a])  
+            if col <= grundy:
+                grundy = col
+                Assignment = self.ants[a]     
+        bests.append(grundy) 
+        avgs.append(self.getAvg())
+        tours.append(0)
+        for k in range(self.tours):
+            tours.append(k+1)
+            print("tour:", k)
+            # update trail intensities
+            for t in self.trail:
+                deltat = 0
+                for a in self.ants:
+                    if self.ants[a][t[0]] == t[1]:
+                        deltat += self.Q/self.getColors(self.ants[a])
+                
+                self.trail[t] = self.gamma * self.trail[t] + deltat
+            
+            
+            # compute probabilities and transition
+            x = 1
+            prob = []
+            for a in self.ants:
+                random.shuffle(vertices)
+                
+                for v in vertices:
+                    neighborColors = self.getNeighborColors(self.ants[a],v)
+                    
+                    #compute probabilities
+                    sigmaT = 0
+                    for j in self.colors:
+                        if j not in neighborColors and j in self.ants[a]:
+                            assignment = self.ants[a].copy()
+                            assignment[v] = j
+                            n = x/self.getColors(assignment)
+                            sigmaT += (self.trail[(v,j)])**self.alpha * n**self.beta
+                    if sigmaT != 0: #if can change
+                        probabilities = []
+                        for i in self.colors:
+                            p = 0
+                            if i not in neighborColors and i in self.ants[a]:
+                                assignment = self.ants[a].copy()
+                                assignment[v] = i
+                                n = x/self.getColors(assignment)
+                                p = ((self.trail[(v,i)])**self.alpha * n**self.beta)/sigmaT
+                            probabilities.append(p)
+                        # transition
+                        c = choice(self.colors, 1, p=probabilities)
+                        og = self.ants[a]
+                        self.ants[a][v] = c[0]
+                        if self.getColors(og) < self.getColors(self.ants[a]):
+                            for u in self.graph[v]:
+                                sigmaT = 0
+                                for j in self.colors:
+                                    if j not in neighborColors and j in self.ants[a]:
+                                        assignment = self.ants[a].copy()
+                                        assignment[u] = j
+                                        n = x/self.getColors(assignment)
+                                        sigmaT += (self.trail[(u,j)])**self.alpha * n**self.beta
+                                if sigmaT != 0: #if can change
+                                    probabilities = []
+                                    for i in self.colors:
+                                        p = 0
+                                        if i not in neighborColors and i in self.ants[a]:
+                                            assignment = self.ants[a].copy()
+                                            assignment[u] = i
+                                            n = x/self.getColors(assignment)
+                                            p = ((self.trail[(u,i)])**self.alpha * n**self.beta)/sigmaT
+                                        probabilities.append(p)
+                                    c = choice(self.colors, 1, p=probabilities)
+                                    og = self.ants[a]
+                                    self.ants[a][u] = c[0]
+                    else:
+                        continue
+
+            Assignment = []
+            grundy = math.inf
+            for a in self.ants:
+                col = self.getColors(self.ants[a])  
+                if col <= grundy:
+                    grundy = col
+                    Assignment = self.ants[a]      
+            bests.append(grundy) 
+            avgs.append(self.getAvg())
+
+        ypoints_1 = np.array(avgs)
+        ypoints_2 = np.array(bests)
+        xpoints = np.array(tours)
+
+        plt.plot(xpoints, ypoints_1, color='r', label='Average colors used')
+        plt.plot(xpoints, ypoints_2, color='b', label='Best colors used')
+        plt.title(self.file, "Classic with greedy initialization, alpha = 1, beta = 2, gamma = 0.5")
+        plt.show()
+                
+                
+        self.initialize_random()
+        self.alpha = 1.5
+        self.beta = 3
+        self.gamma = 0.8
+        
+        avgs = []
+        tours = []
+        bests = []
+        
+        vertices = list(self.graph.keys())
+        
+        grundy = math.inf
+        for a in self.ants:
+            col = self.getColors(self.ants[a])  
+            if col <= grundy:
+                grundy = col
+                Assignment = self.ants[a]     
+        bests.append(grundy) 
+        avgs.append(self.getAvg())
+        tours.append(0)
+        for k in range(self.tours):
+            tours.append(k+1)
+            print("tour:", k)
+            # update trail intensities
+            for t in self.trail:
+                deltat = 0
+                for a in self.ants:
+                    if self.ants[a][t[0]] == t[1]:
+                        deltat += self.Q/self.getColors(self.ants[a])
+                
+                self.trail[t] = self.gamma * self.trail[t] + deltat
+            
+            
+            # compute probabilities and transition
+            x = 1
+            prob = []
+            for a in self.ants:
+                random.shuffle(vertices)
+                
+                for v in vertices:
+                    neighborColors = self.getNeighborColors(self.ants[a],v)
+                    
+                    #compute probabilities
+                    sigmaT = 0
+                    for j in self.colors:
+                        if j not in neighborColors and j in self.ants[a]:
+                            assignment = self.ants[a].copy()
+                            assignment[v] = j
+                            n = x/self.getColors(assignment)
+                            sigmaT += (self.trail[(v,j)])**self.alpha * n**self.beta
+                    if sigmaT != 0: #if can change
+                        probabilities = []
+                        for i in self.colors:
+                            p = 0
+                            if i not in neighborColors and i in self.ants[a]:
+                                assignment = self.ants[a].copy()
+                                assignment[v] = i
+                                n = x/self.getColors(assignment)
+                                p = ((self.trail[(v,i)])**self.alpha * n**self.beta)/sigmaT
+                            probabilities.append(p)
+                        # transition
+                        c = choice(self.colors, 1, p=probabilities)
+                        og = self.ants[a]
+                        self.ants[a][v] = c[0]
+                        if self.getColors(og) < self.getColors(self.ants[a]):
+                            for u in self.graph[v]:
+                                sigmaT = 0
+                                for j in self.colors:
+                                    if j not in neighborColors and j in self.ants[a]:
+                                        assignment = self.ants[a].copy()
+                                        assignment[u] = j
+                                        n = x/self.getColors(assignment)
+                                        sigmaT += (self.trail[(u,j)])**self.alpha * n**self.beta
+                                if sigmaT != 0: #if can change
+                                    probabilities = []
+                                    for i in self.colors:
+                                        p = 0
+                                        if i not in neighborColors and i in self.ants[a]:
+                                            assignment = self.ants[a].copy()
+                                            assignment[u] = i
+                                            n = x/self.getColors(assignment)
+                                            p = ((self.trail[(u,i)])**self.alpha * n**self.beta)/sigmaT
+                                        probabilities.append(p)
+                                    c = choice(self.colors, 1, p=probabilities)
+                                    og = self.ants[a]
+                                    self.ants[a][u] = c[0]
+                    else:
+                        continue
+
+            Assignment = []
+            grundy = math.inf
+            for a in self.ants:
+                col = self.getColors(self.ants[a])  
+                if col <= grundy:
+                    grundy = col
+                    Assignment = self.ants[a]      
+            bests.append(grundy) 
+            avgs.append(self.getAvg())
+
+        ypoints_1 = np.array(avgs)
+        ypoints_2 = np.array(bests)
+        xpoints = np.array(tours)
+
+        plt.plot(xpoints, ypoints_1, color='r', label='Average colors used')
+        plt.plot(xpoints, ypoints_2, color='b', label='Best colors used')
+        plt.title(self.file, "Classic with random initialization, alpha = 1.5, beta = 3, gamma = 0.8")
         plt.show()
                 
 
 
-# G = {0:[1,2,3,4],
-#      1:[0,2,3,4],
-#      2:[0,1,3,4],
-#      3:[0,1,2],
-#      4:[0,1,2],
-#      5:[6],
-#      6:[5,7],
-#      7:[6]  
-# } 
-# test = ACO(graph= G, gamma = 0.8 ,alpha = 2, beta = 1, size = 100,tours=500)
-# test = ACO(graph= G, gamma = 0.5 ,alpha = 1, beta = 2, size = 100, tours=1000)
-test = ACO(graph= G, gamma = 0.8 ,alpha = 1.5, beta = 3, size = 100, tours=1000)
-# test = ACO(graph= G, gamma = 0.8 ,alpha = 1.5, beta = 0.8, size = 100,tours=500)
-# test = ACO()
-test.getData("queen11_11_formated.col")
-# test.getData("le450-15b_formated.col")
-# print(test.graph)
-# print(test.getMAD())
+G = {0:[1,2,3,4],
+     1:[0,2,3,4],
+     2:[0,1,3,4],
+     3:[0,1,2],
+     4:[0,1,2],
+     5:[6],
+     6:[5,7],
+     7:[6]  
+} 
+aco = ACO(graph= G, gamma = 0.5 ,alpha = 1, beta = 2, size = 100, tours=500)
+aco.getData("queen11_11_formated.col")
+aco.test()
 
-# test.initialize()
-test.initialize_random()
-# test.optimize()
-test.optimizeHeuristic()
+aco = ACO(graph= G, gamma = 0.5 ,alpha = 1, beta = 2, size = 100, tours=500)
+aco.getData("le450-15b_formated.col")
+aco.test()
+
+
+# aco = ACO(graph= G, gamma = 0.8 ,alpha = 1, beta = 2, size = 100, tours=1000)
+# aco = ACO(graph= G, gamma = 0.8 ,alpha = 1.5, beta = 3, size = 100,tours=1000)
+# aco = ACO()
+
+# aco.getData("le450-15b_formated.col")
+# aco.getData("queen11_11_formated.col")
+# aco.initialize()
+# aco.initialize_random()
+# aco.optimize()
+# aco.optimizeHeuristic()
 
     
 #88
