@@ -465,7 +465,8 @@ class ACO:
 
         plt.plot(xpoints, ypoints_1, color='r', label='Average colors used')
         plt.plot(xpoints, ypoints_2, color='b', label='Best colors used')
-        plt.title(self.file, "Heuristic with greedy initialization, alpha = 1, beta = 2, gamma = 0.5")
+        title = str(self.file)+"Heuristic with greedy initialization, alpha = 1, beta = 2, gamma = 0.5"
+        plt.title(title)
         plt.show()
                 
                 
@@ -553,7 +554,8 @@ class ACO:
 
         plt.plot(xpoints, ypoints_1, color='r', label='Average colors used')
         plt.plot(xpoints, ypoints_2, color='b', label='Best colors used')
-        plt.title(self.file, "Heuristic with random initialization, alpha = 1.5, beta = 3, gamma = 0.8")
+        title = str(self.file) + "Heuristic with random initialization, alpha = 1.5, beta = 3, gamma = 0.8"
+        plt.title(title)
         plt.show()
         
         
@@ -666,7 +668,8 @@ class ACO:
 
         plt.plot(xpoints, ypoints_1, color='r', label='Average colors used')
         plt.plot(xpoints, ypoints_2, color='b', label='Best colors used')
-        plt.title(self.file, "Classic with greedy initialization, alpha = 1, beta = 2, gamma = 0.5")
+        title = str(self.file)+ "Classic with greedy initialization, alpha = 1, beta = 2, gamma = 0.5"
+        plt.title(title)
         plt.show()
                 
                 
@@ -775,7 +778,8 @@ class ACO:
 
         plt.plot(xpoints, ypoints_1, color='r', label='Average colors used')
         plt.plot(xpoints, ypoints_2, color='b', label='Best colors used')
-        plt.title(self.file, "Classic with random initialization, alpha = 1.5, beta = 3, gamma = 0.8")
+        title = str(self.file) + "Classic with random initialization, alpha = 1.5, beta = 3, gamma = 0.8"
+        plt.title(title)
         plt.show()
                 
 
